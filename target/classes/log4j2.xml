@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration package="com.springcamelmybatis.db" status="WARN">
+
+	<Properties>
+		<Property name="fileLogDir">/log/</Property>
+		<Property name="fileLogPattern">%d %p %c: %m%n</Property>
+        <Property name="fileLogTriggerSize">1 MB</Property>
+        <Property name="fileLogRolloverMax">10</Property>
+	</Properties>
+
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+
+		<RollingFile name="springcamelmybatis" fileName="${fileLogDir}/springcamelmybatis.log"
+			filePattern="${fileLogDir}/springcamelmybatis-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="${fileLogPattern}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="${fileLogTriggerSize}" />
+			</Policies>
+			<DefaultRolloverStrategy max="${fileLogRolloverMax}" />
+		</RollingFile>
+		
+		<RollingFile name="DocAssemblyAppFile" fileName="${fileLogDir}/springcamelmybatis.log"
+			filePattern="${fileLogDir}/springcamelmybatis-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="${fileLogPattern}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="${fileLogTriggerSize}" />
+			</Policies>
+			<DefaultRolloverStrategy max="${fileLogRolloverMax}" />
+		</RollingFile>
+	</Appenders>
+
+	<Loggers>
+		<Logger name="org.apache.camel" level="TRACE" />
+		<Logger name="org.springframework" level="DEBUG" />
+		<Logger name="com.springcamelmybatis.db" level="trace" additivity="false"/>
+
+		<Root level="TRACE">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="springcamelmybatis"/>
+		</Root>
+		
+		<Logger name="com.springcamelmybatis.db" level="debug" additivity="false">
+			<AppenderRef ref="springcamelmybatis" />
+		</Logger>
+
+	</Loggers>
+</Configuration>
